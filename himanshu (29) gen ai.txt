@@ -1,0 +1,21 @@
+The paper "Attention Is All You Need" introduces the Transformer model, a sequence transduction model that is solely based on self-attention mechanisms, dispensing with recurrence and convolutions entirely. Some key highlights of the paper are its removal for recurrences and convolutions, being dependent only on attention mechanisms to relate items in a sequence. In this sense, it is a greatly parallelizable approach during training and can also allow for more efficient (hence possibly better performing) solutions.
+
+### Model Architecture
+Transformer is constructed with an encoder-decoder architecture containing self-attention mechanisms for both components. The input sequence is tokenized and processed by the encoder, which generates a set of continuous representations (embeddings) for each word/token. The decoder then processes these continuous vectors to regenerate new tokens in output sentences/sequences. The main advantages of this architecture are:
+Self-Attention Mechanism: It can give weights to different words in a sequence so the model is able to remember long-range dependencies effectively.
+Attention Mechanism: Transformers are known as a type of attention mechanism because they zero in on certain parts or specific elements within your data, using this focus to make predictions - Multi-Head Attention: Allows the model to jointly attend to information from different representation subspaces at various positions.
+Positional Encoding- The model, in absence of recurrence has to kind of indicate position so it can utilize that positional information as well.
+- Feed-Forward Networks: Our encoder and decoder comprise fully connected feed-forward networks in each layer, after the attention functions.
+Layer Normalization and Residual Connections: To stabilize training, codify the learning into residual connections for improved convergence.
+The high parallelizability of the architecture is another advantage, as this makes the training process much faster than traditional recurrent models. 
+
+### Training 
+The following process was applied on the WMT 2014 English to German and English to French translation tasks. The key aspects of this process include: 
+*Data Pre-processing: The two datasets are made up of millions of sentence pairs that were tokenized and fed to the transformer model during training. A shared byte-pair encoding sub word vocabulary also is used and the sentences are batched by approximate sentence length.
+
+* Hardware Utilization: The models are trained on NVIDIA P100 GPUs. The base model is trained for 12 hours for 100,000 steps, while the larger model takes around 3.5 days to train for 300,000 steps. * Optimizer and learning rate: The Adam optimizer is employed, and the learning rate is varied during the training. It starts from 0 and goes linearly to the training schedule varying factor during the initial few thousands of steps. After that, it decreases proportionally to the inverse square root of the step number. 
+* Regularization Techniques: Dropout and other regularization methods are used to prevent overfitting and promote generalization.
+
+The results show that the Transformer is able to outperform (by a large margin in most cases) all previously introduced models, including ensembles, scaling to translation tasks and requiring significantly less training time.
+In a summary, Transformer model architecture and training have revolutionized the landscape of sequence modelling showing how attention mechanisms can solve challenging language tasks in computationally efficient way.
+
